@@ -7,7 +7,6 @@ from pathlib import Path
 import configparser
 import requests
 import json
-import yaml
 
 
 def qiita_get_config():
@@ -18,6 +17,11 @@ def qiita_get_config():
     return config
 
 
+def qiita_get_headers(access_token):
+    """カスタムヘッダを得る."""
+    return {'Authorization': "Bearer %s" % (access_token)}
+
+
 def qiita_get_authuser(access_token):
     """公開されたアイテム数を得る."""
     url = 'https://qiita.com/api/v2/authenticated_user'
@@ -26,16 +30,10 @@ def qiita_get_authuser(access_token):
     return json.loads(resp.text).get('items_count')
 
 
-def qiita_get_headers(access_token):
-    """カスタムヘッダーを得る."""
-    return {'Authorization': "Bearer %s" % (access_token)}
-
-
 def qiita_get_authuser_items(access_token):
     """限定共有を含むすべてのアイテムを得る."""
     PER_PAGE_MAX = 100
     items = []
-
     url = 'https://qiita.com/api/v2/authenticated_user/items'
     page = 1
     while True:
@@ -47,14 +45,11 @@ def qiita_get_authuser_items(access_token):
             break
         items.extend(page_items)
         page += 1
-
     return items
 
 
 def qiita_get_authuser_items2(access_token):
     """限定共有を除く、すべてのアイテムを得る."""
-    PER_PAGE_MAX = 100
-
     items = qiita_get_authuser_items(access_token)
     items = filter(lambda x: not x['private'], items)
     return list(items)

@@ -41,7 +41,7 @@ if __name__ == '__main__':
         if summary_id == re.escape(i.get('id')):
             continue
 
-        # URLの有無を確認する
+        # URL無ければリンクを加える
         pattern = re.escape(i.get('url'))
         if not re.search(pattern, body):
             url = i.get('url')
@@ -50,6 +50,7 @@ if __name__ == '__main__':
                 body += "\n"
             body += f"* [{title}]({url})\n"
             changed = True
+
     payload['body'] = body
 
     # 変更あれば更新する
