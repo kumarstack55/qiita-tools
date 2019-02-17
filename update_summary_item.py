@@ -63,7 +63,8 @@ if __name__ == '__main__':
                 'data': json.dumps(payload),
             }
             r = qiita_patch_items_item_id(**argv)
-            assert(r.text == body)
+            # 即座に結果は繁栄されないため、次のコードは使わない
+            # assert(r.text == body)
         else:
             print("changed=True (dry run)")
     else:
