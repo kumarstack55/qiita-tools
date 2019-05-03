@@ -51,6 +51,22 @@ if __name__ == '__main__':
             body += f"* [{title}]({url})\n"
             changed = True
 
+    # タイトルに相違があれば置き換える
+    for i in qiita_get_authuser_items2(access_token):
+        # まとめ記事へのリンクは気にしない
+        if summary_id == re.escape(i.get('id')):
+            continue
+
+        # URL無ければリンクを加える
+        pattern = "\[[^]]+\]\(" + re.escape(i.get('url')) + "\)"
+        url = i.get('url')
+        title = i.get('title')
+        repl = f"[{title}]({url})"
+        body_orig = body
+        body = re.sub(pattern, repl, body)
+        if body != body_orig:
+            changed = True
+
     payload['body'] = body
 
     # 変更あれば更新する
