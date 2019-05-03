@@ -2,17 +2,17 @@
 
 ```bash
 # python3
-yum install epel-release -y
-yum-config-manager --disable epel
-yum install --disablerepo='*' --enablerepo=epel python36 -y
+sudo yum install epel-release -y
+sudo yum-config-manager --disable epel
+sudo yum install --disablerepo='*' --enablerepo=epel python36 -y
 
 # git
-yum install git -y
+sudo yum install git -y
 
 # setup venv
 python36 -mvenv $HOME/.venv
 source $HOME/.venv/bin/activate
-pip install -r requirements.txt 
+pip install -r requirements.txt
 deactivate
 
 # setup qiita-tools
