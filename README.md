@@ -2,6 +2,7 @@
 
 ```bash
 # python3
+sudo yum install yum-utils -y
 sudo yum install epel-release -y
 sudo yum-config-manager --disable epel
 sudo yum install --disablerepo='*' --enablerepo=epel python36 -y
